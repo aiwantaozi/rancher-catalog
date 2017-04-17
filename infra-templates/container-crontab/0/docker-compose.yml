@@ -1,7 +1,7 @@
 version: '2'
 services:
   container-crontab:
-    image: rancher/container-crontab:v0.1.0
+    image: 10.255.18.31/container-crontab:v0.1.0
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

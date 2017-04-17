@@ -1,7 +1,7 @@
 version: '2'
 services:
   scheduler:
-    image: rancher/scheduler:v0.5.1
+    image: 10.255.18.31/scheduler:v0.5.1
     command: scheduler
     labels:
         io.rancher.container.create_agent: "true"

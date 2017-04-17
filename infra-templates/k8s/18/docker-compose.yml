@@ -13,12 +13,12 @@ kubelet:
         - --register-node=true
         - --cloud-provider=${CLOUD_PROVIDER}
         - --healthz-bind-address=0.0.0.0
-        - --cluster-dns=10.43.0.10
+        - --cluster-dns=image: 10.255.18.31/43.0.10
         - --cluster-domain=cluster.local
         - --network-plugin=cni
         - --network-plugin-dir=/etc/cni/managed.d
         - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
-    image: rancher/k8s:v1.5.2-rancher1-2
+    image: 10.255.18.31/k8s:v1.5.2-rancher1-2
     volumes:
         - /run:/run
         - /var/run:/var/run
@@ -45,14 +45,14 @@ proxy:
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.5.2-rancher1-2
+    image: 10.255.18.31/k8s:v1.5.2-rancher1-2
     privileged: true
     net: host
     links:
         - kubernetes
 
 etcd:
-    image: rancher/etcd:v2.3.7-11
+    image: 10.255.18.31/etcd:v2.3.7-11
     labels:
         io.rancher.scheduler.affinity:host_label_soft: etcd=true
         io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
@@ -85,7 +85,7 @@ kubernetes:
         io.rancher.sidekicks: kube-hostname-updater
     command: 
         - kube-apiserver
-        - --service-cluster-ip-range=10.43.0.0/16
+        - --service-cluster-ip-range=image: 10.255.18.31/43.0.0/16
         - --etcd-servers=http://etcd.kubernetes.rancher.internal:2379
         - --insecure-bind-address=0.0.0.0
         - --insecure-port=80
@@ -98,7 +98,7 @@ kubernetes:
         - --runtime-config=batch/v2alpha1
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-    image: rancher/k8s:v1.5.2-rancher1-2
+    image: 10.255.18.31/k8s:v1.5.2-rancher1-2
     links:
         - etcd
 
@@ -106,7 +106,7 @@ kube-hostname-updater:
     net: container:kubernetes
     command:
         - etc-host-updater
-    image: rancher/etc-host-updater:v0.0.2
+    image: 10.255.18.31/etc-host-updater:v0.0.2
     links:
         - kubernetes
 
@@ -119,7 +119,7 @@ kubectld:
     environment:
         SERVER: http://kubernetes.kubernetes.rancher.internal
         LISTEN: ":8091"
-    image: rancher/kubectld:v0.5.4
+    image: 10.255.18.31/kubectld:v0.5.4
     links:
         - kubernetes
 
@@ -128,7 +128,7 @@ scheduler:
         - kube-scheduler
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --address=0.0.0.0
-    image: rancher/k8s:v1.5.2-rancher1-2
+    image: 10.255.18.31/k8s:v1.5.2-rancher1-2
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
     links:
@@ -143,7 +143,7 @@ controller-manager:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.5.2-rancher1-2
+    image: 10.255.18.31/k8s:v1.5.2-rancher1-2
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
         io.rancher.container.create_agent: "true"
@@ -158,7 +158,7 @@ rancher-kubernetes-agent:
         io.rancher.container.agent_service.labels_provider: "true"
     environment:
         KUBERNETES_URL: http://kubernetes.kubernetes.rancher.internal
-    image: rancher/kubernetes-agent:v0.5.4
+    image: 10.255.18.31/kubernetes-agent:v0.5.4
     privileged: true
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
@@ -166,7 +166,7 @@ rancher-kubernetes-agent:
         - kubernetes
 
 rancher-ingress-controller:
-    image: rancher/lb-service-rancher:v0.5.9
+    image: 10.255.18.31/lb-service-rancher:v0.5.9
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
         io.rancher.container.create_agent: "true"
@@ -181,7 +181,7 @@ rancher-ingress-controller:
         - kubernetes
 
 addon-starter:
-    image: rancher/k8s:v1.5.2-rancher1-2
+    image: 10.255.18.31/k8s:v1.5.2-rancher1-2
     labels:
         io.rancher.container.create_agent: 'true'
         io.rancher.container.agent.role: environmentAdmin

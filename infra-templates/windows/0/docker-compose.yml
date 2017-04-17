@@ -1,11 +1,11 @@
 version: '2'
 services:
     nat:
-        image: rancher/none
+        image: 10.255.18.31/none
         labels:
             io.rancher.service.selector.container: experimental-windows-rancher
 
     transparent:
-        image: rancher/none
+        image: 10.255.18.31/none
         labels:
             io.rancher.service.selector.container: experimental-windows-rancher

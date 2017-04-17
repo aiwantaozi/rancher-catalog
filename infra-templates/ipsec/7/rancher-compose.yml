@@ -19,7 +19,7 @@
       label: "Subnet"
       description: "The subnet to use for the managed IPSEC network."
       type: "string"
-      default: '10.42.0.0/16'
+      default: 'image: 10.255.18.31/42.0.0/16'
       required: true
     - variable: "RANCHER_DEBUG"
       label: "Enable Debug Logs"

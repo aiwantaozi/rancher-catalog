@@ -2,7 +2,7 @@ version: '2'
 services:
   ipsec:
     # IMPORTANT!!!! DO NOT CHANGE VERSION ON UPGRADE
-    image: rancher/net:holder
+    image: 10.255.18.31/net:holder
     command: sh -c "echo Refer to router sidekick for logs; mkfifo f; exec cat f"
     network_mode: ipsec
     ports:
@@ -18,7 +18,7 @@ services:
   router:
     cap_add:
       - NET_ADMIN
-    image: rancher/net:v0.8.7
+    image: 10.255.18.31/net:v0.8.7
     network_mode: container:ipsec
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
@@ -32,7 +32,7 @@ services:
         max-file: '2'
   cni-driver:
     privileged: true
-    image: rancher/net:v0.8.7
+    image: 10.255.18.31/net:v0.8.7
     command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     network_mode: host
     pid: host

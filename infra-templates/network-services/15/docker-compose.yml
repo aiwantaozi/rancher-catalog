@@ -1,7 +1,7 @@
 version: '2'
 services:
   network-manager:
-    image: rancher/network-manager:v0.5.3
+    image: 10.255.18.31/network-manager:v0.5.3
     privileged: true
     network_mode: host
     pid: host
@@ -28,7 +28,7 @@ services:
   metadata:
     cap_add:
     - NET_ADMIN
-    image: rancher/metadata:v0.8.11
+    image: 10.255.18.31/metadata:v0.8.11
     network_mode: bridge
     command: start.sh rancher-metadata -subscribe
     labels:
@@ -42,7 +42,7 @@ services:
         max-size: 25m
         max-file: '2'
   dns:
-    image: rancher/dns:v0.14.1
+    image: 10.255.18.31/dns:v0.14.1
     network_mode: container:metadata
     command: rancher-dns --metadata-server=localhost --answers=/etc/rancher-dns/answers.json
     labels:

@@ -15,7 +15,7 @@ kubelet:
         - --healthz-bind-address=0.0.0.0
         - --cluster-dns=169.254.169.250
         - --cluster-domain=cluster.local
-    image: rancher/k8s:v1.2.4-rancher9
+    image: 10.255.18.31/k8s:v1.2.4-rancher9
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - /var/run:/host/var/run
@@ -39,14 +39,14 @@ proxy:
         - --v=2
         - --healthz-bind-address=0.0.0.0
         - --proxy-mode=userspace
-    image: rancher/k8s:v1.2.4-rancher9
+    image: 10.255.18.31/k8s:v1.2.4-rancher9
     privileged: true
     net: host
     links:
         - kubernetes:master
 
 etcd:
-    image: rancher/etcd:v2.3.7-9
+    image: 10.255.18.31/etcd:v2.3.7-9
     labels:
         io.rancher.scheduler.affinity:host_label_soft: etcd=true
         io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
@@ -78,7 +78,7 @@ kubernetes:
         io.rancher.container.agent.role: environmentAdmin
     command: 
         - kube-apiserver
-        - --service-cluster-ip-range=10.43.0.0/16
+        - --service-cluster-ip-range=image: 10.255.18.31/43.0.0/16
         - --etcd-servers=http://etcd:2379
         - --insecure-bind-address=0.0.0.0
         - --insecure-port=80
@@ -88,7 +88,7 @@ kubernetes:
         - --client-ca-file=/etc/kubernetes/ssl/ca.pem
         - --tls-cert-file=/etc/kubernetes/ssl/cert.pem
         - --tls-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.2.4-rancher9
+    image: 10.255.18.31/k8s:v1.2.4-rancher9
     links:
         - etcd
 
@@ -100,7 +100,7 @@ kubectld:
     environment:
         SERVER: http://master
         LISTEN: ":8091"
-    image: rancher/kubectld:v0.2.1
+    image: 10.255.18.31/kubectld:v0.2.1
     links:
         - kubernetes:master
 
@@ -109,7 +109,7 @@ scheduler:
         - kube-scheduler
         - --master=http://master
         - --address=0.0.0.0
-    image: rancher/k8s:v1.2.4-rancher9
+    image: 10.255.18.31/k8s:v1.2.4-rancher9
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
         io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
@@ -125,7 +125,7 @@ controller-manager:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.2.4-rancher9
+    image: 10.255.18.31/k8s:v1.2.4-rancher9
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
         io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true
@@ -142,7 +142,7 @@ rancher-kubernetes-agent:
         io.rancher.container.agent_service.labels_provider: "true"
     environment:
         KUBERNETES_URL: http://master
-    image: rancher/kubernetes-agent:v0.2.1
+    image: 10.255.18.31/kubernetes-agent:v0.2.1
     privileged: true
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
@@ -150,7 +150,7 @@ rancher-kubernetes-agent:
         - kubernetes:master
 
 rancher-ingress-controller:
-    image: rancher/ingress-controller:v0.1.3
+    image: 10.255.18.31/ingress-controller:v0.1.3
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
         io.rancher.scheduler.affinity:host_label_soft_ne: etcd=true

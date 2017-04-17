@@ -17,7 +17,7 @@
       required: true
       default: ""
     - variable: "KVDB"
-      description: "Key-value database, accessibe to all nodes in PX cluster (Ex: 'etcd://10.0.0.42:4001')"
+      description: "Key-value database, accessibe to all nodes in PX cluster (Ex: 'etcd://image: 10.255.18.31/0.0.42:4001')"
       label: "Key-Value Database"
       type: "string"
       required: true
